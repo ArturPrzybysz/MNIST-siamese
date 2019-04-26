@@ -3,7 +3,7 @@ from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.layers import Conv2D, Dense, Flatten, Lambda, MaxPooling2D
 from tensorflow.python.keras import backend as K
 
-from src.config import MARGIN
+from src.config import MARGIN, LR
 
 
 def siamese_model(input_shape, embedding_size):
@@ -31,12 +31,12 @@ def siamese_model(input_shape, embedding_size):
 
 def embedding_model(input_shape, embedding_size):
     model = _embedding_model(input_shape, embedding_size)
-    model.compile(optimizer=None)
+    model.compile(optimizer=Adam(lr=LR), loss="mean_squared_error")
     return model
 
 
 def _embedding_model(input_shape, embedding_size):
-    inputs = Input(shape=input_shape)
+    inputs = Input(shape=input_shape, name="img_input")
     x = Conv2D(16, (4, 4), activation="relu")(inputs)
     x = MaxPooling2D(pool_size=(2, 2))(x)
     x = Conv2D(32, (3, 3), activation="relu")(x)

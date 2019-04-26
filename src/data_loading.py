@@ -7,6 +7,7 @@ from src.util import vstack_matrices
 def preprocess(x):
     x = x.astype('float32')
     x /= 255
+    x = x.reshape((len(x), INPUT_SHAPE[0], INPUT_SHAPE[1], INPUT_SHAPE[2]))
     return x
 
 
@@ -51,7 +52,4 @@ def random_triplets(x, y, triplets_count):
         negatives = vstack_matrices(negatives, class_negatives)
 
     assert triplets_count == len(anchors) == len(positives) == len(negatives)
-    anchors = anchors.reshape((len(anchors), INPUT_SHAPE[0], INPUT_SHAPE[1], INPUT_SHAPE[2]))
-    positives = positives.reshape((len(anchors), INPUT_SHAPE[0], INPUT_SHAPE[1], INPUT_SHAPE[2]))
-    negatives = negatives.reshape((len(anchors), INPUT_SHAPE[0], INPUT_SHAPE[1], INPUT_SHAPE[2]))
     return anchors, positives, negatives
