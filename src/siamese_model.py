@@ -29,9 +29,10 @@ def siamese_model(input_shape, embedding_size):
     return model
 
 
-def embedding_model(input_shape, embedding_size):
+def embedding_model(input_shape, embedding_size, _siamese_model):
     model = _embedding_model(input_shape, embedding_size)
     model.compile(optimizer=Adam(lr=LR), loss="mean_squared_error")
+    model.set_weights(_siamese_model.get_weights())
     return model
 
 
