@@ -12,5 +12,5 @@ https://github.com/omoindrot/tensorflow-triplet-loss/issues/6 (discussion on stu
 TSNE for test set:  
 ![](https://github.com/ArturPrzybysz/MNIST-siamese/blob/master/img/testTSNE.png)
 
-TSNE for train set:
+TSNE for train set:  
 ![](https://github.com/ArturPrzybysz/MNIST-siamese/blob/master/img/trainTSNE.png)
