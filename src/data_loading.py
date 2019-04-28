@@ -37,17 +37,18 @@ def _semi_hard_triplets_per_class(class_idx, embeddings, x, y, triplets_count):
     positives = None
     negatives = None
 
-    for pos_emb, pos_x, anch_emb, anch_x in zip(positive_embeddings, positive_xs, anchor_embeddings, anchor_xs):
-        for neg_emb, neg_x in zip(negative_embeddings, negative_xs):
-            if anchors is not None and len(anchors) == triplets_count:
-                break
-            pos_dist = np.linalg.norm(anch_emb - pos_emb)
-            neg_dist = np.linalg.norm(anch_emb - neg_emb)
+    for anch_emb, anch_x in zip(anchor_embeddings, anchor_xs):
+        for pos_emb, pos_x in zip(positive_embeddings, positive_xs):
+            for neg_emb, neg_x in zip(negative_embeddings, negative_xs):
+                if anchors is not None and len(anchors) == triplets_count:
+                    break
+                pos_dist = np.linalg.norm(anch_emb - pos_emb)
+                neg_dist = np.linalg.norm(anch_emb - neg_emb)
 
-            if pos_dist < neg_dist < pos_dist + MARGIN:
-                anchors = vstack_matrices(anchors, anch_x)
-                positives = vstack_matrices(positives, pos_x)
-                negatives = vstack_matrices(negatives, neg_x)
+                if pos_dist < neg_dist < pos_dist + MARGIN:
+                    anchors = vstack_matrices(anchors, anch_x)
+                    positives = vstack_matrices(positives, pos_x)
+                    negatives = vstack_matrices(negatives, neg_x)
 
     anchors = np.array(anchors)
     positives = np.array(positives)

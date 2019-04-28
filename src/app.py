@@ -20,10 +20,12 @@ dummy_y = np.zeros((len(anchors), 3, 1))
 for i in range(EPOCHS):
     model.fit([anchors, positives, negatives], dummy_y, batch_size=BATCH_SIZE, epochs=EPOCHS_PER_BATCH)
     embed_model = embedding_model(INPUT_SHAPE, EMBEDDING_SIZE, model)
-    anchors, positives, negatives = semi_hard_triplets(x_train, y_train, embed_model, TRAIN_TRIPLES)
+    anchors, positives, negatives = random_triplets(x_train, y_train, TRAIN_TRIPLES)
     print(compute_pseudo_accuracy(model, valid_triplets))
 
 emb_model = embedding_model(INPUT_SHAPE, EMBEDDING_SIZE, model)
 
-prediction = emb_model.predict(x_test)
-plot_TSNE(prediction, y_test)
+prediction = emb_model.predict(x_test[:1000])
+plot_TSNE(prediction, y_test[:1000])
+prediction = emb_model.predict(x_train[:1000])
+plot_TSNE(prediction, y_train[:1000])
