@@ -58,7 +58,7 @@ def _semi_hard_triplets_per_class(class_idx, embeddings, x, y, triplets_count):
         deficit = triplets_count - len(anchors)
         anchors = vstack_matrices(anchors, positive_xs[:deficit])
         positives = vstack_matrices(positives, positive_xs[len(positive_xs) - deficit:])
-        random_negatives = positive_xs[np.random.choice(len(negative_xs), deficit, replace=False)]
+        random_negatives = negative_xs[np.random.choice(len(negative_xs), deficit, replace=False)]
         negatives = vstack_matrices(negatives, random_negatives)
     assert triplets_count == len(negatives) == len(positives) == len(negatives)
     return anchors, positives, negatives
